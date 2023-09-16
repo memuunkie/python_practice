@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template
+import sqlite3
+
 app = Flask(__name__)
 
 GET_METHOD = 'GET'
@@ -17,6 +19,11 @@ in_memory_datastore = {
    "CLU": {"name": "CLU", "publication_year": 1975,
            "contribution": "iterators, abstract data types, generics, checked exceptions"},
 }
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 @app.route('/')
 def index():
