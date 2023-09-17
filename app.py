@@ -1,8 +1,9 @@
 import sqlite3
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for, flash, redirect
 from werkzeug.exceptions import abort
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'pretend-secret-key' # normally this would be set in an env variable on the box, not here
 
 GET_METHOD = 'GET'
 POST_METHOD = 'POST'
@@ -71,3 +72,7 @@ def get_programming_language_name(programming_language_name):
 def post(post_id):
     post = get_post(post_id)
     return render_template('post.html', post=post)
+
+@app.route('/create')
+def create():
+    return render_template('create.html')
